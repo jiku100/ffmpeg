@@ -17,15 +17,11 @@ for codec in CODECS.keys():
         csv_file_size_name = csv_file_header + "_" + "FileSize.csv"
         csv_encoding_time_name = csv_file_header + "_" + "EncodingTime.csv"
 
-        index_list = [target + str(i) for i in range(1,52)]
-        file_size_index = index_list.copy()
-        file_size_index.insert(0, "RAW")
-        encoding_time_index = index_list.copy()
 
-        df_file_size = pd.DataFrame(index=file_size_index)
-        df_encoding_time = pd.DataFrame(index=encoding_time_index)
+        df_file_size = pd.read_csv(csv_file_size_name, index_col=0)
+        df_encoding_time = pd.read_csv(csv_encoding_time_name, index_col=0)
 
-        for i in range(1, 11):
+        for i in range(11, 21):
             input_file_name = "./original/" + "subject" + str(i) + "/vid.avi"
             encoding_times = []
             video_sizes = []
@@ -59,9 +55,6 @@ for codec in CODECS.keys():
             column_name = "subject" + str(i)
             df_file_size[column_name] = video_sizes
             df_encoding_time[column_name] = encoding_times
-
-        df_file_size.index.name = "Quality"
-        df_encoding_time.index.name = "Quality"
 
         df_file_size.to_csv(csv_file_size_name)
         df_encoding_time.to_csv(csv_encoding_time_name)
